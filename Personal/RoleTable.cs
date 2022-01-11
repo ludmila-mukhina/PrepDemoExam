@@ -12,25 +12,18 @@ namespace Personal
     using System;
     using System.Collections.Generic;
     
-    public partial class EmployeeTable
+    public partial class RoleTable
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public EmployeeTable()
+        public RoleTable()
         {
-            this.EmployeeMetrics = new HashSet<EmployeeMetrics>();
+            this.User = new HashSet<User>();
         }
     
-        public int id_employee { get; set; }
-        public string surname { get; set; }
-        public string name { get; set; }
-        public string patronymic { get; set; }
-        public int year { get; set; }
-        public string department { get; set; }
-        public int id_position { get; set; }
+        public int id_role { get; set; }
+        public string role { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EmployeeMetrics> EmployeeMetrics { get; set; }
-        public virtual PositionTable PositionTable { get; set; }
-        public virtual User User { get; set; }
+        public virtual ICollection<User> User { get; set; }
     }
 }

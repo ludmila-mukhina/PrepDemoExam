@@ -31,5 +31,8 @@ namespace Personal
         public virtual DbSet<MetricsCriteria> MetricsCriteria { get; set; }
         public virtual DbSet<MetricsTable> MetricsTable { get; set; }
         public virtual DbSet<PositionTable> PositionTable { get; set; }
+        public virtual DbSet<RoleTable> RoleTable { get; set; }
+        public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     }
 }

@@ -55,6 +55,32 @@
           <Property Name="id_position" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="position" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="RoleTable">
+          <Key>
+            <PropertyRef Name="id_role" />
+          </Key>
+          <Property Name="id_role" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="role" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id_employee" />
+          </Key>
+          <Property Name="id_employee" Type="int" Nullable="false" />
+          <Property Name="login" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="id_role" Type="int" Nullable="false" />
+        </EntityType>
         <Association Name="FK_EmployeeMetrics_EmployeeTable">
           <End Role="EmployeeTable" Type="Self.EmployeeTable" Multiplicity="1" />
           <End Role="EmployeeMetrics" Type="Self.EmployeeMetrics" Multiplicity="*" />
@@ -115,6 +141,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_User_EmployeeTable">
+          <End Role="EmployeeTable" Type="Self.EmployeeTable" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeTable">
+              <PropertyRef Name="id_employee" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="id_employee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_RoleTable">
+          <End Role="RoleTable" Type="Self.RoleTable" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoleTable">
+              <PropertyRef Name="id_role" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="id_role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Хранилище PersonalModelContainer">
           <EntitySet Name="Criteria" EntityType="Self.Criteria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeeMetrics" EntityType="Self.EmployeeMetrics" Schema="dbo" store:Type="Tables" />
@@ -122,6 +172,9 @@
           <EntitySet Name="MetricsCriteria" EntityType="Self.MetricsCriteria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MetricsTable" EntityType="Self.MetricsTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PositionTable" EntityType="Self.PositionTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RoleTable" EntityType="Self.RoleTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_EmployeeMetrics_EmployeeTable" Association="Self.FK_EmployeeMetrics_EmployeeTable">
             <End Role="EmployeeTable" EntitySet="EmployeeTable" />
             <End Role="EmployeeMetrics" EntitySet="EmployeeMetrics" />
@@ -142,6 +195,14 @@
             <End Role="MetricsTable" EntitySet="MetricsTable" />
             <End Role="MetricsCriteria" EntitySet="MetricsCriteria" />
           </AssociationSet>
+          <AssociationSet Name="FK_User_EmployeeTable" Association="Self.FK_User_EmployeeTable">
+            <End Role="EmployeeTable" EntitySet="EmployeeTable" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_RoleTable" Association="Self.FK_User_RoleTable">
+            <End Role="RoleTable" EntitySet="RoleTable" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -154,6 +215,8 @@
           <EntitySet Name="MetricsCriteria" EntityType="PersonalModel.MetricsCriteria" />
           <EntitySet Name="MetricsTable" EntityType="PersonalModel.MetricsTable" />
           <EntitySet Name="PositionTable" EntityType="PersonalModel.PositionTable" />
+          <EntitySet Name="RoleTable" EntityType="PersonalModel.RoleTable" />
+          <EntitySet Name="User" EntityType="PersonalModel.User" />
           <AssociationSet Name="FK_MetricsCriteria_Criteria" Association="PersonalModel.FK_MetricsCriteria_Criteria">
             <End Role="Criteria" EntitySet="Criteria" />
             <End Role="MetricsCriteria" EntitySet="MetricsCriteria" />
@@ -170,10 +233,19 @@
             <End Role="PositionTable" EntitySet="PositionTable" />
             <End Role="EmployeeTable" EntitySet="EmployeeTable" />
           </AssociationSet>
+          <AssociationSet Name="FK_User_EmployeeTable" Association="PersonalModel.FK_User_EmployeeTable">
+            <End Role="EmployeeTable" EntitySet="EmployeeTable" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
           <AssociationSet Name="FK_MetricsCriteria_MetricsTable" Association="PersonalModel.FK_MetricsCriteria_MetricsTable">
             <End Role="MetricsTable" EntitySet="MetricsTable" />
             <End Role="MetricsCriteria" EntitySet="MetricsCriteria" />
           </AssociationSet>
+          <AssociationSet Name="FK_User_RoleTable" Association="PersonalModel.FK_User_RoleTable">
+            <End Role="RoleTable" EntitySet="RoleTable" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <EntitySet Name="sysdiagrams" EntityType="PersonalModel.sysdiagrams" />
         </EntityContainer>
         <EntityType Name="Criteria">
           <Key>
@@ -206,6 +278,7 @@
           <Property Name="id_position" Type="Int32" Nullable="false" />
           <NavigationProperty Name="EmployeeMetrics" Relationship="PersonalModel.FK_EmployeeMetrics_EmployeeTable" FromRole="EmployeeTable" ToRole="EmployeeMetrics" />
           <NavigationProperty Name="PositionTable" Relationship="PersonalModel.FK_EmployeeTable_PositionTable" FromRole="EmployeeTable" ToRole="PositionTable" />
+          <NavigationProperty Name="User" Relationship="PersonalModel.FK_User_EmployeeTable" FromRole="EmployeeTable" ToRole="User" />
         </EntityType>
         <EntityType Name="MetricsCriteria">
           <Key>
@@ -234,6 +307,25 @@
           <Property Name="id_position" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="position" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="EmployeeTable" Relationship="PersonalModel.FK_EmployeeTable_PositionTable" FromRole="PositionTable" ToRole="EmployeeTable" />
+        </EntityType>
+        <EntityType Name="RoleTable">
+          <Key>
+            <PropertyRef Name="id_role" />
+          </Key>
+          <Property Name="id_role" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="role" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="PersonalModel.FK_User_RoleTable" FromRole="RoleTable" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id_employee" />
+          </Key>
+          <Property Name="id_employee" Type="Int32" Nullable="false" />
+          <Property Name="login" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="id_role" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="EmployeeTable" Relationship="PersonalModel.FK_User_EmployeeTable" FromRole="User" ToRole="EmployeeTable" />
+          <NavigationProperty Name="RoleTable" Relationship="PersonalModel.FK_User_RoleTable" FromRole="User" ToRole="RoleTable" />
         </EntityType>
         <Association Name="FK_MetricsCriteria_Criteria">
           <End Type="PersonalModel.Criteria" Role="Criteria" Multiplicity="1" />
@@ -283,6 +375,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_User_EmployeeTable">
+          <End Type="PersonalModel.EmployeeTable" Role="EmployeeTable" Multiplicity="1" />
+          <End Type="PersonalModel.User" Role="User" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeTable">
+              <PropertyRef Name="id_employee" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="id_employee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_MetricsCriteria_MetricsTable">
           <End Type="PersonalModel.MetricsTable" Role="MetricsTable" Multiplicity="1" />
           <End Type="PersonalModel.MetricsCriteria" Role="MetricsCriteria" Multiplicity="*" />
@@ -295,7 +399,29 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <Association Name="FK_User_RoleTable">
+          <End Type="PersonalModel.RoleTable" Role="RoleTable" Multiplicity="1" />
+          <End Type="PersonalModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoleTable">
+              <PropertyRef Name="id_role" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="id_role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -354,6 +480,35 @@
               <MappingFragment StoreEntitySet="PositionTable">
                 <ScalarProperty Name="position" ColumnName="position" />
                 <ScalarProperty Name="id_position" ColumnName="id_position" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RoleTable">
+            <EntityTypeMapping TypeName="PersonalModel.RoleTable">
+              <MappingFragment StoreEntitySet="RoleTable">
+                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="id_role" ColumnName="id_role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="PersonalModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="id_role" ColumnName="id_role" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="id_employee" ColumnName="id_employee" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="PersonalModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
