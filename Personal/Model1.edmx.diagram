@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="720fa88b089e461f91b5da135523261f" Name="Diagram1">
+        <EntityTypeShape EntityType="PersonalModel.Criteria" Width="1.5" PointX="0.75" PointY="1" />
+        <EntityTypeShape EntityType="PersonalModel.EmployeeMetrics" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="PersonalModel.EmployeeTable" Width="1.5" PointX="0.75" PointY="7.25" />
+        <EntityTypeShape EntityType="PersonalModel.MetricsCriteria" Width="1.5" PointX="3" PointY="3.75" />
+        <EntityTypeShape EntityType="PersonalModel.MetricsTable" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="PersonalModel.PositionTable" Width="1.5" PointX="1.5" PointY="10.875" />
+        <AssociationConnector Association="PersonalModel.FK_MetricsCriteria_Criteria" />
+        <AssociationConnector Association="PersonalModel.FK_EmployeeMetrics_EmployeeTable" />
+        <AssociationConnector Association="PersonalModel.FK_EmployeeMetrics_MetricsTable" />
+        <AssociationConnector Association="PersonalModel.FK_EmployeeTable_PositionTable" />
+        <AssociationConnector Association="PersonalModel.FK_MetricsCriteria_MetricsTable" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

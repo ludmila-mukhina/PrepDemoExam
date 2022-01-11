@@ -1,0 +1,383 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище PersonalModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Criteria">
+          <Key>
+            <PropertyRef Name="id_criterion" />
+          </Key>
+          <Property Name="id_criterion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="criterion" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmployeeMetrics">
+          <Key>
+            <PropertyRef Name="id_emp_metr" />
+          </Key>
+          <Property Name="id_emp_metr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_employee" Type="int" Nullable="false" />
+          <Property Name="id_metrics" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmployeeTable">
+          <Key>
+            <PropertyRef Name="id_employee" />
+          </Key>
+          <Property Name="id_employee" Type="int" Nullable="false" />
+          <Property Name="surname" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="patronymic" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="year" Type="int" Nullable="false" />
+          <Property Name="department" Type="nvarchar" MaxLength="50" />
+          <Property Name="id_position" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MetricsCriteria">
+          <Key>
+            <PropertyRef Name="id_met_cr" />
+          </Key>
+          <Property Name="id_met_cr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_criterion" Type="int" Nullable="false" />
+          <Property Name="id_metrics" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MetricsTable">
+          <Key>
+            <PropertyRef Name="id_metrics" />
+          </Key>
+          <Property Name="id_metrics" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="metrics" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="weight" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PositionTable">
+          <Key>
+            <PropertyRef Name="id_position" />
+          </Key>
+          <Property Name="id_position" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="position" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_EmployeeMetrics_EmployeeTable">
+          <End Role="EmployeeTable" Type="Self.EmployeeTable" Multiplicity="1" />
+          <End Role="EmployeeMetrics" Type="Self.EmployeeMetrics" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeTable">
+              <PropertyRef Name="id_employee" />
+            </Principal>
+            <Dependent Role="EmployeeMetrics">
+              <PropertyRef Name="id_employee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeMetrics_MetricsTable">
+          <End Role="MetricsTable" Type="Self.MetricsTable" Multiplicity="1" />
+          <End Role="EmployeeMetrics" Type="Self.EmployeeMetrics" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MetricsTable">
+              <PropertyRef Name="id_metrics" />
+            </Principal>
+            <Dependent Role="EmployeeMetrics">
+              <PropertyRef Name="id_metrics" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeTable_PositionTable">
+          <End Role="PositionTable" Type="Self.PositionTable" Multiplicity="1" />
+          <End Role="EmployeeTable" Type="Self.EmployeeTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PositionTable">
+              <PropertyRef Name="id_position" />
+            </Principal>
+            <Dependent Role="EmployeeTable">
+              <PropertyRef Name="id_position" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MetricsCriteria_Criteria">
+          <End Role="Criteria" Type="Self.Criteria" Multiplicity="1" />
+          <End Role="MetricsCriteria" Type="Self.MetricsCriteria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Criteria">
+              <PropertyRef Name="id_criterion" />
+            </Principal>
+            <Dependent Role="MetricsCriteria">
+              <PropertyRef Name="id_criterion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MetricsCriteria_MetricsTable">
+          <End Role="MetricsTable" Type="Self.MetricsTable" Multiplicity="1" />
+          <End Role="MetricsCriteria" Type="Self.MetricsCriteria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MetricsTable">
+              <PropertyRef Name="id_metrics" />
+            </Principal>
+            <Dependent Role="MetricsCriteria">
+              <PropertyRef Name="id_metrics" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище PersonalModelContainer">
+          <EntitySet Name="Criteria" EntityType="Self.Criteria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeMetrics" EntityType="Self.EmployeeMetrics" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeTable" EntityType="Self.EmployeeTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MetricsCriteria" EntityType="Self.MetricsCriteria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MetricsTable" EntityType="Self.MetricsTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PositionTable" EntityType="Self.PositionTable" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_EmployeeMetrics_EmployeeTable" Association="Self.FK_EmployeeMetrics_EmployeeTable">
+            <End Role="EmployeeTable" EntitySet="EmployeeTable" />
+            <End Role="EmployeeMetrics" EntitySet="EmployeeMetrics" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeMetrics_MetricsTable" Association="Self.FK_EmployeeMetrics_MetricsTable">
+            <End Role="MetricsTable" EntitySet="MetricsTable" />
+            <End Role="EmployeeMetrics" EntitySet="EmployeeMetrics" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeTable_PositionTable" Association="Self.FK_EmployeeTable_PositionTable">
+            <End Role="PositionTable" EntitySet="PositionTable" />
+            <End Role="EmployeeTable" EntitySet="EmployeeTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MetricsCriteria_Criteria" Association="Self.FK_MetricsCriteria_Criteria">
+            <End Role="Criteria" EntitySet="Criteria" />
+            <End Role="MetricsCriteria" EntitySet="MetricsCriteria" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MetricsCriteria_MetricsTable" Association="Self.FK_MetricsCriteria_MetricsTable">
+            <End Role="MetricsTable" EntitySet="MetricsTable" />
+            <End Role="MetricsCriteria" EntitySet="MetricsCriteria" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PersonalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="PersonalEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Criteria" EntityType="PersonalModel.Criteria" />
+          <EntitySet Name="EmployeeMetrics" EntityType="PersonalModel.EmployeeMetrics" />
+          <EntitySet Name="EmployeeTable" EntityType="PersonalModel.EmployeeTable" />
+          <EntitySet Name="MetricsCriteria" EntityType="PersonalModel.MetricsCriteria" />
+          <EntitySet Name="MetricsTable" EntityType="PersonalModel.MetricsTable" />
+          <EntitySet Name="PositionTable" EntityType="PersonalModel.PositionTable" />
+          <AssociationSet Name="FK_MetricsCriteria_Criteria" Association="PersonalModel.FK_MetricsCriteria_Criteria">
+            <End Role="Criteria" EntitySet="Criteria" />
+            <End Role="MetricsCriteria" EntitySet="MetricsCriteria" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeMetrics_EmployeeTable" Association="PersonalModel.FK_EmployeeMetrics_EmployeeTable">
+            <End Role="EmployeeTable" EntitySet="EmployeeTable" />
+            <End Role="EmployeeMetrics" EntitySet="EmployeeMetrics" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeMetrics_MetricsTable" Association="PersonalModel.FK_EmployeeMetrics_MetricsTable">
+            <End Role="MetricsTable" EntitySet="MetricsTable" />
+            <End Role="EmployeeMetrics" EntitySet="EmployeeMetrics" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeTable_PositionTable" Association="PersonalModel.FK_EmployeeTable_PositionTable">
+            <End Role="PositionTable" EntitySet="PositionTable" />
+            <End Role="EmployeeTable" EntitySet="EmployeeTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MetricsCriteria_MetricsTable" Association="PersonalModel.FK_MetricsCriteria_MetricsTable">
+            <End Role="MetricsTable" EntitySet="MetricsTable" />
+            <End Role="MetricsCriteria" EntitySet="MetricsCriteria" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Criteria">
+          <Key>
+            <PropertyRef Name="id_criterion" />
+          </Key>
+          <Property Name="id_criterion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="criterion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MetricsCriteria" Relationship="PersonalModel.FK_MetricsCriteria_Criteria" FromRole="Criteria" ToRole="MetricsCriteria" />
+        </EntityType>
+        <EntityType Name="EmployeeMetrics">
+          <Key>
+            <PropertyRef Name="id_emp_metr" />
+          </Key>
+          <Property Name="id_emp_metr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_employee" Type="Int32" Nullable="false" />
+          <Property Name="id_metrics" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="EmployeeTable" Relationship="PersonalModel.FK_EmployeeMetrics_EmployeeTable" FromRole="EmployeeMetrics" ToRole="EmployeeTable" />
+          <NavigationProperty Name="MetricsTable" Relationship="PersonalModel.FK_EmployeeMetrics_MetricsTable" FromRole="EmployeeMetrics" ToRole="MetricsTable" />
+        </EntityType>
+        <EntityType Name="EmployeeTable">
+          <Key>
+            <PropertyRef Name="id_employee" />
+          </Key>
+          <Property Name="id_employee" Type="Int32" Nullable="false" />
+          <Property Name="surname" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="patronymic" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="year" Type="Int32" Nullable="false" />
+          <Property Name="department" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="id_position" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="EmployeeMetrics" Relationship="PersonalModel.FK_EmployeeMetrics_EmployeeTable" FromRole="EmployeeTable" ToRole="EmployeeMetrics" />
+          <NavigationProperty Name="PositionTable" Relationship="PersonalModel.FK_EmployeeTable_PositionTable" FromRole="EmployeeTable" ToRole="PositionTable" />
+        </EntityType>
+        <EntityType Name="MetricsCriteria">
+          <Key>
+            <PropertyRef Name="id_met_cr" />
+          </Key>
+          <Property Name="id_met_cr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_criterion" Type="Int32" Nullable="false" />
+          <Property Name="id_metrics" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Criteria" Relationship="PersonalModel.FK_MetricsCriteria_Criteria" FromRole="MetricsCriteria" ToRole="Criteria" />
+          <NavigationProperty Name="MetricsTable" Relationship="PersonalModel.FK_MetricsCriteria_MetricsTable" FromRole="MetricsCriteria" ToRole="MetricsTable" />
+        </EntityType>
+        <EntityType Name="MetricsTable">
+          <Key>
+            <PropertyRef Name="id_metrics" />
+          </Key>
+          <Property Name="id_metrics" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="metrics" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="weight" Type="Double" Nullable="false" />
+          <NavigationProperty Name="EmployeeMetrics" Relationship="PersonalModel.FK_EmployeeMetrics_MetricsTable" FromRole="MetricsTable" ToRole="EmployeeMetrics" />
+          <NavigationProperty Name="MetricsCriteria" Relationship="PersonalModel.FK_MetricsCriteria_MetricsTable" FromRole="MetricsTable" ToRole="MetricsCriteria" />
+        </EntityType>
+        <EntityType Name="PositionTable">
+          <Key>
+            <PropertyRef Name="id_position" />
+          </Key>
+          <Property Name="id_position" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="position" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="EmployeeTable" Relationship="PersonalModel.FK_EmployeeTable_PositionTable" FromRole="PositionTable" ToRole="EmployeeTable" />
+        </EntityType>
+        <Association Name="FK_MetricsCriteria_Criteria">
+          <End Type="PersonalModel.Criteria" Role="Criteria" Multiplicity="1" />
+          <End Type="PersonalModel.MetricsCriteria" Role="MetricsCriteria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Criteria">
+              <PropertyRef Name="id_criterion" />
+            </Principal>
+            <Dependent Role="MetricsCriteria">
+              <PropertyRef Name="id_criterion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeMetrics_EmployeeTable">
+          <End Type="PersonalModel.EmployeeTable" Role="EmployeeTable" Multiplicity="1" />
+          <End Type="PersonalModel.EmployeeMetrics" Role="EmployeeMetrics" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeTable">
+              <PropertyRef Name="id_employee" />
+            </Principal>
+            <Dependent Role="EmployeeMetrics">
+              <PropertyRef Name="id_employee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeMetrics_MetricsTable">
+          <End Type="PersonalModel.MetricsTable" Role="MetricsTable" Multiplicity="1" />
+          <End Type="PersonalModel.EmployeeMetrics" Role="EmployeeMetrics" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MetricsTable">
+              <PropertyRef Name="id_metrics" />
+            </Principal>
+            <Dependent Role="EmployeeMetrics">
+              <PropertyRef Name="id_metrics" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeTable_PositionTable">
+          <End Type="PersonalModel.PositionTable" Role="PositionTable" Multiplicity="1" />
+          <End Type="PersonalModel.EmployeeTable" Role="EmployeeTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PositionTable">
+              <PropertyRef Name="id_position" />
+            </Principal>
+            <Dependent Role="EmployeeTable">
+              <PropertyRef Name="id_position" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MetricsCriteria_MetricsTable">
+          <End Type="PersonalModel.MetricsTable" Role="MetricsTable" Multiplicity="1" />
+          <End Type="PersonalModel.MetricsCriteria" Role="MetricsCriteria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MetricsTable">
+              <PropertyRef Name="id_metrics" />
+            </Principal>
+            <Dependent Role="MetricsCriteria">
+              <PropertyRef Name="id_metrics" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище PersonalModelContainer" CdmEntityContainer="PersonalEntities">
+          <EntitySetMapping Name="Criteria">
+            <EntityTypeMapping TypeName="PersonalModel.Criteria">
+              <MappingFragment StoreEntitySet="Criteria">
+                <ScalarProperty Name="criterion" ColumnName="criterion" />
+                <ScalarProperty Name="id_criterion" ColumnName="id_criterion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeMetrics">
+            <EntityTypeMapping TypeName="PersonalModel.EmployeeMetrics">
+              <MappingFragment StoreEntitySet="EmployeeMetrics">
+                <ScalarProperty Name="id_metrics" ColumnName="id_metrics" />
+                <ScalarProperty Name="id_employee" ColumnName="id_employee" />
+                <ScalarProperty Name="id_emp_metr" ColumnName="id_emp_metr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeTable">
+            <EntityTypeMapping TypeName="PersonalModel.EmployeeTable">
+              <MappingFragment StoreEntitySet="EmployeeTable">
+                <ScalarProperty Name="id_position" ColumnName="id_position" />
+                <ScalarProperty Name="department" ColumnName="department" />
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="patronymic" ColumnName="patronymic" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="id_employee" ColumnName="id_employee" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MetricsCriteria">
+            <EntityTypeMapping TypeName="PersonalModel.MetricsCriteria">
+              <MappingFragment StoreEntitySet="MetricsCriteria">
+                <ScalarProperty Name="id_metrics" ColumnName="id_metrics" />
+                <ScalarProperty Name="id_criterion" ColumnName="id_criterion" />
+                <ScalarProperty Name="id_met_cr" ColumnName="id_met_cr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MetricsTable">
+            <EntityTypeMapping TypeName="PersonalModel.MetricsTable">
+              <MappingFragment StoreEntitySet="MetricsTable">
+                <ScalarProperty Name="weight" ColumnName="weight" />
+                <ScalarProperty Name="metrics" ColumnName="metrics" />
+                <ScalarProperty Name="id_metrics" ColumnName="id_metrics" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PositionTable">
+            <EntityTypeMapping TypeName="PersonalModel.PositionTable">
+              <MappingFragment StoreEntitySet="PositionTable">
+                <ScalarProperty Name="position" ColumnName="position" />
+                <ScalarProperty Name="id_position" ColumnName="id_position" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
