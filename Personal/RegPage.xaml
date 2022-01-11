@@ -19,7 +19,7 @@
             <GroupBox Header="Введите пароль">
                 <PasswordBox Name="PBPass"></PasswordBox>
             </GroupBox>
-            <Button>Зарегистрироваться в системе</Button>
+            <Button Click="Button_Click">Зарегистрироваться в системе</Button>
         </StackPanel>
     </Grid>
 </Page>
